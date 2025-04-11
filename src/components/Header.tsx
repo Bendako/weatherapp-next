@@ -4,14 +4,26 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
-export default function Header() {
+interface HeaderProps {
+  onSearch: (city: string) => Promise<void>;
+}
+
+export default function Header({ onSearch }: HeaderProps) {
   const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    // We'll implement the search functionality later
-    console.log("Searching for:", search);
+    if (search.trim() && !isSearching) {
+      setIsSearching(true);
+      try {
+        await onSearch(search.trim());
+      } finally {
+        setIsSearching(false);
+      }
+    }
   };
 
   return (
@@ -36,8 +48,18 @@ export default function Header() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="flex-1"
+              disabled={isSearching}
             />
-            <Button type="submit">Search</Button>
+            <Button type="submit" disabled={isSearching}>
+              {isSearching ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Searching
+                </>
+              ) : (
+                'Search'
+              )}
+            </Button>
           </form>
         </div>
       </div>
