@@ -1,4 +1,4 @@
-import { WeatherData } from "@/types/weather";
+import { CitySuggestion, WeatherData } from "@/types/weather";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_OPENWEATHER_BASE_URL;
@@ -45,5 +45,28 @@ export async function getWeatherByCoords(lat: number, lon: number): Promise<Weat
       throw error;
     }
     throw new Error('Failed to fetch weather data by coordinates');
+  }
+}
+
+export async function searchCities(query: string, limit: number = 5): Promise<CitySuggestion[]> {
+  if (!query || query.length < 3) { // Don't search for very short strings
+    return [];
+  }
+  try {
+    // Use the correct Geo API endpoint directly
+    const geocodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=${limit}&appid=${API_KEY}`;
+    const response = await fetch(geocodingApiUrl);
+
+    if (!response.ok) {
+      // Don't throw an error, just return empty array if suggestions fail
+      console.error("Geocoding API error:", await response.text());
+      return [];
+    }
+
+    const data: CitySuggestion[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch city suggestions:", error);
+    return []; // Return empty on network or other errors
   }
 } 
