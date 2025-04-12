@@ -1,9 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function DocumentationPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Weather App Documentation</h1>
+      <div className="mb-8">
+        <Link href="/" passHref>
+          <Button variant="ghost" className="mb-4">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
+          </Button>
+        </Link>
+        <h1 className="text-4xl font-bold">Weather App Documentation</h1>
+      </div>
       
       {/* Tech Stack Section */}
       <Card className="mb-8">
