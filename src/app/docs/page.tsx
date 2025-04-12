@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import DocsClientContent from "@/components/DocsClientContent";
 
 export default function DocumentationPage() {
   return (
@@ -114,26 +115,7 @@ export default function DocumentationPage() {
       </Card>
 
       {/* Data Flow Section */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Data Flow</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p>The application follows this data flow:</p>
-            <ol className="list-decimal pl-6 space-y-2">
-              <li>User enters a city name in the search bar</li>
-              <li>Search form prevents default form submission</li>
-              <li>Weather API call will be made (to be implemented)</li>
-              <li>Data will be fetched and transformed</li>
-              <li>UI updates with new weather information</li>
-            </ol>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Note: Weather API integration is pending implementation
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <DocsClientContent />
 
       {/* Development Section */}
       <Card>

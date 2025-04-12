@@ -120,3 +120,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Add styles for the Mermaid container */
+.mermaid-container > svg {
+  /* Ensure the SVG scales down if the container is narrow */
+  max-width: 100%; 
+  height: auto; /* Maintain aspect ratio */
+}
+
+.mermaid-container {
+  /* Limit the max width of the diagram container */
+  max-width: 600px; /* Adjust this value as needed */
+  margin-left: auto; /* Center the container if it's narrower than the parent */
+  margin-right: auto;
+}
